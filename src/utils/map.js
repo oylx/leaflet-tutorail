@@ -13,4 +13,31 @@ const createTileLayer = async (map, url, options) => {
   return tileLayer;
 };
 
-export default { createMap, createTileLayer }
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+let DefaultIcon = $L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow
+});
+$L.Marker.prototype.options.icon = DefaultIcon;
+
+const createIcon = options => {
+  return $L.icon(options);
+};
+
+/**
+ * 通过 [x, y] 坐标添加 Maker
+ *
+ * @param {Object} map
+ * @param {Object} latLng
+ * @param {Object} options
+ *
+ */
+const createMakerByXY = (map, coordinate, options = {}) => {
+  let marker = $L.marker($L.latLng(coordinate[1], coordinate[0]), options);
+  marker.addTo(map);
+  return marker;
+};
+
+
+export default { createMap, createTileLayer, createIcon, createMakerByXY }
