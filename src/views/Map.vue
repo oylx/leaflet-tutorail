@@ -2,7 +2,8 @@
   <div class="map-container">
     <div id="map-container"></div>
     <NavigationCtrl @zoomIn="zoomIn" @zoomOut="zoomOut" @resetMap="resetMap"></NavigationCtrl>
-    <MapTools @marker="addMarker" @polyline="addPolyline" @polygon="addPolygon" @addToolTips="addTooltips"></MapTools>
+    <MapTools @marker="addMarker" @polyline="addPolyline" @polygon="addPolygon" @addToolTips="addTooltips"
+              @popUp="addPopUp" @bindPopup="bindPopup"></MapTools>
   </div>
 </template>
 
@@ -199,6 +200,44 @@ export default {
       }
       // 为 tooltips 指定 class 类名
       marker.bindTooltip(toolitps, { className: 'sample-tooltips' })
+    },
+    addPopUp() {
+      let popup = this.$utils.map.createPopup({
+        maxWidth: 200,
+        minWidth: 100,
+        className: 'sample-popup',
+        lat: 51.505,
+        lng: -0.09
+      })
+      popup
+        .setLatLng(this.$utils.map.createLatLonByArray([51.513, -0.09]))
+        .setContent(
+          `<h1>popup demo</h1><p>This is the content of the popup demo. The length of the content might be so very that maybe beyond the maxWidth that we set on the popup</p>`
+        )
+        .openOn(this.map);
+    },
+    bindPopup() {
+      // 1. 创建 popup
+      let popup = this.$utils.map.createPopup({
+        maxWidth: 200,
+        minWidth: 100,
+        className: 'sample-popup'
+      })
+
+      popup.setContent(
+        `<h1>popup demo</h1><p>This is the content of the popup demo. The length of the content might be so very that maybe beyond the maxWidth that we set on the popup</p>`
+      )
+      let gifIcon = this.$utils.map.createIcon({
+        iconUrl: require('./../assets/images/tree.png'),
+        iconSize: [32, 32]
+      })
+
+      // 2. 创建 marker
+      let marker = this.$utils.map.createMakerByXY(this.map, [-0.095, 51.505], {
+        icon: gifIcon
+      })
+      // 3.为 marker 绑定 popup
+      marker.bindPopup(popup)
     },
   }
 }
