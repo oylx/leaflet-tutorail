@@ -2,7 +2,7 @@
   <div class="map-container">
     <div id="map-container"></div>
     <NavigationCtrl @zoomIn="zoomIn" @zoomOut="zoomOut" @resetMap="resetMap"></NavigationCtrl>
-    <MapTools @marker="addMarker" @polyline="addPolyline" @polygon="addPolygon"></MapTools>
+    <MapTools @marker="addMarker" @polyline="addPolyline" @polygon="addPolygon" @addToolTips="addTooltips"></MapTools>
   </div>
 </template>
 
@@ -179,6 +179,26 @@ export default {
         this.miltiplePolygon,
         multipleLineStyle
       )
+    },
+    /**
+     * 这里值得一提的是，如果 marker 设置的 click 事件，最好把 tooltips 的交互关掉，即：interactive 属性设置为 false， 否则 marker 的 click 事件无法响应。
+     * 灵活使用 tooltips 可在地图上实现多种实用的效果，如灵活使用 permanent 属性并配合 tooltipopen 能实现类似下图的地图统计功能，后面也许会将加上这个效果的分享。
+     *
+     */
+    addTooltips() {
+      let pngJpgIcon = this.$utils.map.createIcon({
+        iconUrl: require('./../assets/images/tree.png'),
+        iconSize: [52, 42]
+      })
+      let marker = this.$utils.map.createMakerByXY(this.map, [-0.09, 51.49], {
+        icon: pngJpgIcon
+      })
+      let toolitps = () => {
+        let tpl = `<h1> tooltips <h1><p>test massage for tooltips</p>`
+        return tpl
+      }
+      // 为 tooltips 指定 class 类名
+      marker.bindTooltip(toolitps, { className: 'sample-tooltips' })
     },
   }
 }

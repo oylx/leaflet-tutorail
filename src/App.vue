@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <map-view />
+    <map-view/>
   </div>
 </template>
 
@@ -15,7 +15,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "~@/assets/style/index.less";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
