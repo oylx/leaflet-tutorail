@@ -16,6 +16,7 @@ import icon from 'leaflet/dist/images/marker-icon.png'
 import iconShadow from 'leaflet/dist/images/marker-shadow.png'
 
 let DefaultIcon = $L.icon({
+  iconAnchor: [13, 41],
   iconUrl: icon,
   shadowUrl: iconShadow
 })
@@ -36,6 +37,11 @@ const createIcon = options => {
 const createMakerByXY = (map, coordinate, options = {}) => {
   let marker = $L.marker($L.latLng(coordinate[1], coordinate[0]), options)
   marker.addTo(map)
+  return marker
+}
+
+const createMakerByLatlng = ({ lat, lng }, options = {}) => {
+  let marker = $L.marker($L.latLng(lat, lng), options)
   return marker
 }
 
@@ -74,4 +80,29 @@ const createLatLonByArray = (coordinate) => {
   return latLng
 }
 
-export default { createMap, createTileLayer, createIcon, createMakerByXY, createPolyline, createPolygon, createPopup, createLatLonByArray }
+// 存储鼠标样式
+let CursorStyle = ''
+
+// 添加鼠标样式
+const addCursorStyle = (map, cursorStyle) => {
+  CursorStyle = cursorStyle
+  $L.DomUtil.addClass(map._container, cursorStyle)
+}
+// 移除鼠标样式
+const removerCursorStyle = map => {
+  $L.DomUtil.removeClass(map._container, CursorStyle)
+}
+
+export default {
+  createMap,
+  createTileLayer,
+  createIcon,
+  createMakerByXY,
+  createMakerByLatlng,
+  createPolyline,
+  createPolygon,
+  createPopup,
+  createLatLonByArray,
+  addCursorStyle,
+  removerCursorStyle,
+}
