@@ -31,14 +31,14 @@ export default {
     drawOff() {
       // 移除监听地图点击事件
       this.map.off('click')
+      // 复原鼠标平移样式
+      this.$utils.map.removerCursorStyle(this.map)
     },
     drawPoint() {
+      this.$utils.map.addCursorStyle(this.map, 'pointer-cursor')
       this.drawOn(evt => {
-        const { lat, lng } = evt.latlng
-        console.log(lat, lng)
-        this.$utils.map.createMakerByXY(this.map, [lng, lat])
-        // this.$utils.map.createMakerByLatlng(evt.latlng).addTo(this.map)
-        // 注意参数类型及经纬度顺序，等同于 this.$utils.map.createMakerByLatlng(evt.latlng).addTo(this.map)
+        this.$utils.map.createMakerByLatlng(evt.latlng).addTo(this.map)
+        // 注意参数类型及经纬度顺序，等同于 this.$utils.map.createMakerByXY(this.map, [evt.lng, evt.lat])
       })
     },
     drawPolyline() {},
