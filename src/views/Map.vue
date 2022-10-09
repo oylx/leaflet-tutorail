@@ -16,7 +16,30 @@ export default {
   data() {
     return {
       map: null,
-      OSMUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      OSMUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      singleLine: [
+        [51.517288954651875, -0.16685485839843753],
+        [51.51194758264939, -0.1474571228027344],
+        [51.51878442657495, -0.13320922851562503],
+        [51.530426064343594, -0.1419639587402344],
+        [51.53640593191922, -0.11209487915039064]
+      ],
+      miltipleLine: [
+        [
+          [51.49282033577651, -0.11432647705078126],
+          [51.48010001366223, -0.10265350341796876],
+          [51.48084836613703, -0.08222579956054689],
+          [51.49591970845512, -0.08239746093750001]
+        ],
+        [
+          [51.47614423230301, -0.08909225463867188],
+          [51.47571655971428, -0.05973815917968751],
+          [51.4829864484029, -0.03398895263671876],
+          [51.49025517833079, -0.008239746093750002],
+          [51.477641054786694, 0.008583068847656252],
+          [51.487796767005534, 0.021800994873046875]
+        ]
+      ]
     }
   },
   mounted() {
@@ -55,7 +78,32 @@ export default {
         icon: pnOrJpgIcon
       })
     },
-    addPolyline() {},
+    addPolyline() {
+      let singleLineStyle = {
+        stroke: true,
+        color: '#de0000',
+        weight: 3,
+        opacity: 1
+      }
+
+      this.$utils.map.createPolyline(
+        this.map,
+        this.singleLine,
+        singleLineStyle
+      )
+
+      let multipleLineStyle = {
+        stroke: true,
+        color: '#0085fb',
+        weight: 4,
+        opacity: 1
+      }
+      this.$utils.map.createPolyline(
+        this.map,
+        this.miltipleLine,
+        multipleLineStyle
+      )
+    },
     addPolygon() {},
   }
 }

@@ -6,7 +6,6 @@ const createMap = (divId, options) => {
   return map
 }
 
-
 const createTileLayer = async (map, url, options) => {
   let tileLayer = await $L.tileLayer(url, options);
   tileLayer.addTo(map);
@@ -39,5 +38,17 @@ const createMakerByXY = (map, coordinate, options = {}) => {
   return marker;
 };
 
+/**
+ * 创建线要素
+ *
+ * @param {Object} map
+ * @param {Array} linePath
+ * @param {Object} lineOpts
+ */
+const createPolyline = (map, linePath, lineOpts) => {
+  let polyline = $L.polyline(linePath, lineOpts);
+  polyline.addTo(map);
+  return polyline;
+};
 
-export default { createMap, createTileLayer, createIcon, createMakerByXY }
+export default { createMap, createTileLayer, createIcon, createMakerByXY, createPolyline }
