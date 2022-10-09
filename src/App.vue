@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <map-polygon v-if="active === 3" />
     <map-polyline v-if="active === 2" />
     <map-point v-if="active === 1" />
     <map-view v-if="active === 0" />
@@ -10,17 +11,19 @@
 import MapView from '@/views/Map'
 import MapPoint from '@/views/Point'
 import MapPolyline from '@/views/Polyline'
+import MapPolygon from '@/views/Polygon'
 
 export default {
   name: 'App',
   components: {
+    MapPolygon,
     MapPolyline,
     MapPoint,
     MapView,
   },
   data() {
     return {
-      active: 2
+      active: 3
     }
   }
 }

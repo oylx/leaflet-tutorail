@@ -159,6 +159,7 @@ export default {
       let singleLineStyle = {
         stroke: true,
         color: '#6d4be0',
+        fill: true,
         weight: 3,
         opacity: 1
       }
@@ -172,6 +173,7 @@ export default {
       let multipleLineStyle = {
         stroke: true,
         color: '#ff00ff',
+        fill:  true,
         weight: 4,
         opacity: 1
       }
