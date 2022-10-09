@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <map-polygon v-if="active === 3" />
-    <map-polyline v-if="active === 2" />
-    <map-point v-if="active === 1" />
-    <map-view v-if="active === 0" />
+    <component :is="CurComp" />
   </div>
 </template>
 
@@ -12,10 +9,14 @@ import MapView from '@/views/Map'
 import MapPoint from '@/views/Point'
 import MapPolyline from '@/views/Polyline'
 import MapPolygon from '@/views/Polygon'
+import MeasureStatic from '@/views/MeasureStatic'
+import MeasureDistance from '@/views/MeasureDistance'
 
 export default {
   name: 'App',
   components: {
+    MeasureDistance,
+    MeasureStatic,
     MapPolygon,
     MapPolyline,
     MapPoint,
@@ -23,9 +24,32 @@ export default {
   },
   data() {
     return {
-      active: 3
+      active: 5,
+      CurComp: null
     }
-  }
+  },
+  methods: {
+    getDynamicCom() {
+      switch (this.active) {
+        case 0:
+          return MapView;
+        case 1:
+          return MapPoint;
+        case 2:
+          return MapPolyline;
+        case 3:
+          return MapPolygon;
+        case 4:
+          return MeasureStatic;
+        case 5:
+          return MeasureDistance;
+      }
+    }
+  },
+  mounted() {
+    this.CurComp = this.getDynamicCom()
+  },
+  computed: {}
 }
 </script>
 

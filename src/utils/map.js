@@ -1,6 +1,11 @@
 import 'leaflet/dist/leaflet.css'
 import $L from 'leaflet'
 
+// 注意：
+// 一定要在 leaflet.js 成功引入之后，在引用此插件
+import 'leaflet-measure-path'
+import 'leaflet-measure-path/leaflet-measure-path.css'
+
 const createMap = (divId, options) => {
   let map = $L.map(divId, options)
   return map
