@@ -51,4 +51,17 @@ const createPolyline = (map, linePath, lineOpts) => {
   return polyline;
 };
 
-export default { createMap, createTileLayer, createIcon, createMakerByXY, createPolyline }
+/**
+ * 创建面要素
+ *
+ * @param {Object} map
+ * @param {Array} areaPath
+ * @param {Object} areaOpts
+ */
+const createPolygon = (map, areaPath, areaOpts) => {
+  let polygon = $L.polyline(areaPath, areaOpts);
+  polygon.addTo(map);
+  return polygon;
+};
+
+export default { createMap, createTileLayer, createIcon, createMakerByXY, createPolyline, createPolygon }
