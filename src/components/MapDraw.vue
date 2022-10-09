@@ -1,9 +1,9 @@
 <template>
   <div class="map-tools">
     <ul>
-      <li :class="[{active: activeTool == 'point'}]" @click="point">Point</li>
-      <li @click="$emit('polyline')">Polyline</li>
-      <li @click="$emit('polygon')">Polygon</li>
+      <li :class="[{active: activeTool === 'point'}]" @click="handleClick('point')">Point</li>
+      <li :class="[{active: activeTool === 'polyline'}]" @click="handleClick('polyline')">Polyline</li>
+      <li :class="[{active: activeTool === 'polygon'}]" @click="handleClick('polygon')">Polygon</li>
     </ul>
   </div>
 </template>
@@ -17,15 +17,15 @@ export default {
     }
   },
   methods: {
-    point() {
-      if (this.activeTool !== 'point') {
-        this.activeTool = 'point'
-        this.$emit('point')
-      } else {
+    handleClick(type) {
+      if (this.activeTool === type) {
         this.activeTool = ''
         this.$emit('end')
+      } else {
+        this.activeTool = type
+        this.$emit(type)
       }
-    }
+    },
   }
 }
 </script>
