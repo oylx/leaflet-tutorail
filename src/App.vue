@@ -15,11 +15,13 @@ import MapPolygon from '@/views/Polygon'
 import MeasureStatic from '@/views/MeasureStatic'
 import MeasureDistance from '@/views/MeasureDistance'
 import ArcgisServices from '@/views/ArcgisServices'
+import LayerControl from '@/views/LayerControl'
 
 
 export default {
   name: 'App',
   components: {
+    LayerControl,
     ArcgisServices,
     MeasureDistance,
     MeasureStatic,
@@ -37,6 +39,7 @@ export default {
       { name: 'MeasureStatic', component: MeasureStatic, key: 4 },
       { name: 'MeasureDistance', component: MeasureDistance, key: 5 },
       { name: 'ArcgisServices', component: ArcgisServices, key: 6 },
+      { name: 'LayerControl', component: LayerControl, key: 7 },
     ]
     return {
       active: 6,
