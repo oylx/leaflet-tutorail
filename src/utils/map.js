@@ -1,10 +1,18 @@
 import 'leaflet/dist/leaflet.css'
 import $L from 'leaflet'
+import { basemapLayer, featureLayer, tiledMapLayer, dynamicMapLayer, imageMapLayer } from 'esri-leaflet'
 
-// 注意：
-// 一定要在 leaflet.js 成功引入之后，在引用此插件
+// 在 leaflet， esri-leaflet 引用成功之后引用
+import 'esri-leaflet-renderers'
+
+// 注意：一定要在 leaflet.js 成功引入之后，在引用此插件
 import 'leaflet-measure-path'
 import 'leaflet-measure-path/leaflet-measure-path.css'
+
+import Cluster from 'esri-leaflet-cluster'
+import Heatmap from 'esri-leaflet-heatmap'
+// import Cluster from './esri-cluster'
+// import Heatmap from './esri-heatmap'
 
 const createMap = (divId, options) => {
   let map = $L.map(divId, options)
@@ -98,6 +106,34 @@ const removerCursorStyle = map => {
   $L.DomUtil.removeClass(map._container, CursorStyle)
 }
 
+// 添加底图图层的加载方法
+const addEsirBasemap = async (map, layerName) => {
+  return await basemapLayer(layerName).addTo(map)
+}
+
+const addEsirTiledMapLayer = async (map, opts) => {
+  return await tiledMapLayer(opts).addTo(map)
+}
+
+const addEsirDynamicMapLayer = async (map, opts) => {
+  return await dynamicMapLayer(opts).addTo(map)
+}
+const addImageMaplayer = async (map, opts) => {
+  return await imageMapLayer(opts).addTo(map)
+}
+
+const addEsirFeatureLayer = async (map, opts) => {
+  return await featureLayer(opts).addTo(map)
+}
+
+const addEsirClusterLayer = async (map, opts) => {
+  return await Cluster(opts).addTo(map)
+}
+
+const addEsriHeatmap = async (map, opts) => {
+  return await Heatmap(opts).addTo(map)
+}
+
 export default {
   createMap,
   createTileLayer,
@@ -110,4 +146,11 @@ export default {
   createLatLonByArray,
   addCursorStyle,
   removerCursorStyle,
+  addEsirBasemap,
+  addEsirTiledMapLayer,
+  addEsirDynamicMapLayer,
+  addImageMaplayer,
+  addEsirFeatureLayer,
+  addEsirClusterLayer,
+  addEsriHeatmap,
 }
