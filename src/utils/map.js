@@ -1,18 +1,30 @@
 import 'leaflet/dist/leaflet.css'
-import $L from 'leaflet'
-import { basemapLayer, featureLayer, tiledMapLayer, dynamicMapLayer, imageMapLayer } from 'esri-leaflet'
+import * as $L from 'leaflet'
 
-// 在 leaflet， esri-leaflet 引用成功之后引用
-import 'esri-leaflet-renderers'
+import 'leaflet.markercluster'
+import 'leaflet.heat'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
-// 注意：一定要在 leaflet.js 成功引入之后，在引用此插件
 import 'leaflet-measure-path'
 import 'leaflet-measure-path/leaflet-measure-path.css'
 
-import Cluster from 'esri-leaflet-cluster'
-import Heatmap from 'esri-leaflet-heatmap'
-// import Cluster from './esri-cluster'
-// import Heatmap from './esri-heatmap'
+import {
+  basemapLayer,
+  featureLayer,
+  tiledMapLayer,
+  dynamicMapLayer,
+  imageMapLayer
+} from 'esri-leaflet'
+
+import 'esri-leaflet-renderers'
+import 'esri-leaflet-cluster'
+import 'esri-leaflet-heatmap/dist/esri-leaflet-heatmap-debug'
+import Cluster from './esri-cluster'
+import Heatmap from './esri-heatmap'
+
+import icon from 'leaflet/dist/images/marker-icon.png'
+import iconShadow from 'leaflet/dist/images/marker-shadow.png'
 
 const createMap = (divId, options) => {
   let map = $L.map(divId, options)
@@ -25,16 +37,18 @@ const createTileLayer = async (map, url, options) => {
   return tileLayer
 }
 
-import icon from 'leaflet/dist/images/marker-icon.png'
-import iconShadow from 'leaflet/dist/images/marker-shadow.png'
-
 let DefaultIcon = $L.icon({
   iconAnchor: [13, 41],
   iconUrl: icon,
   shadowUrl: iconShadow
 })
-$L.Marker.prototype.options.icon = DefaultIcon
 
+$L.Marker.prototype.options.icon = DefaultIcon
+/**
+ * 创建 Icon
+ *
+ * @param {Oject} options
+ */
 const createIcon = options => {
   return $L.icon(options)
 }
@@ -79,17 +93,20 @@ const createPolyline = (map, linePath, lineOpts) => {
  * @param {Object} areaOpts
  */
 const createPolygon = (map, areaPath, areaOpts) => {
-  let polygon = $L.polyline(areaPath, areaOpts)
+  let polygon = $L.polygon(areaPath, areaOpts)
   polygon.addTo(map)
   return polygon
 }
 
 const createPopup = (options) => $L.popup(options)
 
+const createCircleMaker = (latlng, size, opts) => {
+  return $L.circleMarker(latlng, size, opts)
+}
+
 // 通过数组创建 latlng
 const createLatLonByArray = (coordinate) => {
   let latLng = $L.latLng(coordinate[0], coordinate[1])
-  console.log(1)
   return latLng
 }
 
@@ -104,6 +121,26 @@ const addCursorStyle = (map, cursorStyle) => {
 // 移除鼠标样式
 const removerCursorStyle = map => {
   $L.DomUtil.removeClass(map._container, CursorStyle)
+}
+
+const createMakerCluster = () => {
+  return $L.markerClusterGroup()
+}
+
+const getRandomLatLng = map => {
+  let bounds = map.getBounds(),
+    southWest = bounds.getSouthWest(),
+    northEast = bounds.getNorthEast(),
+    lngSpan = northEast.lng - southWest.lng,
+    latSpan = northEast.lat - southWest.lat
+
+  return $L.latLng(
+    southWest.lat + latSpan * Math.random(),
+    southWest.lng + lngSpan * Math.random()
+  )
+}
+const getLatLng = (x, y) => {
+  return $L.latLng(y, x)
 }
 
 // 添加底图图层的加载方法
@@ -143,9 +180,13 @@ export default {
   createPolyline,
   createPolygon,
   createPopup,
+  createCircleMaker,
   createLatLonByArray,
   addCursorStyle,
   removerCursorStyle,
+  createMakerCluster,
+  getRandomLatLng,
+  getLatLng,
   addEsirBasemap,
   addEsirTiledMapLayer,
   addEsirDynamicMapLayer,
