@@ -16,11 +16,13 @@ import MeasureStatic from '@/views/MeasureStatic'
 import MeasureDistance from '@/views/MeasureDistance'
 import ArcgisServices from '@/views/ArcgisServices'
 import LayerControl from '@/views/LayerControl'
+import MapGroup from '@/views/MapGroup'
 
 
 export default {
   name: 'App',
   components: {
+    MapGroup,
     LayerControl,
     ArcgisServices,
     MeasureDistance,
@@ -40,9 +42,10 @@ export default {
       { name: 'MeasureDistance', component: MeasureDistance, key: 5 },
       { name: 'ArcgisServices', component: ArcgisServices, key: 6 },
       { name: 'LayerControl', component: LayerControl, key: 7 },
+      { name: 'MapGroup', component: MapGroup, key: 8 },
     ]
     return {
-      active: 6,
+      active: 8,
       tabs,
       CurComp: null
     }
