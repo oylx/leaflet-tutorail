@@ -9,6 +9,7 @@
 
 <script>
 import MapView from '@/views/Map'
+import MapBoxGl from '@/views/MapBoxGl'
 import MapPoint from '@/views/Point'
 import MapPolyline from '@/views/Polyline'
 import MapPolygon from '@/views/Polygon'
@@ -31,6 +32,7 @@ export default {
     MapPolyline,
     MapPoint,
     MapView,
+    MapBoxGl,
   },
   data() {
     const tabs = [
@@ -43,9 +45,10 @@ export default {
       { name: 'ArcgisServices', component: ArcgisServices, key: 6 },
       { name: 'LayerControl', component: LayerControl, key: 7 },
       { name: 'MapGroup', component: MapGroup, key: 8 },
+      { name: 'MapBoxGl', component: MapBoxGl, key: 9 },
     ]
     return {
-      active: 8,
+      active: 9,
       tabs,
       CurComp: null
     }

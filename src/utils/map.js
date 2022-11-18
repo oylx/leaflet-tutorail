@@ -16,6 +16,7 @@ import {
   dynamicMapLayer,
   imageMapLayer
 } from 'esri-leaflet'
+import { mapboxGL } from './mapBoxGl2Leaflet'
 
 import 'esri-leaflet-renderers'
 import 'esri-leaflet-cluster'
@@ -171,6 +172,16 @@ const addEsriHeatmap = async (map, opts) => {
   return await Heatmap(opts).addTo(map)
 }
 
+const addProtobuf = (map, url, opts) => {
+  let tileLayer = $L.vectorGrid.protobuf(url, opts)
+  tileLayer.addTo(map)
+  return tileLayer
+}
+
+const addMapboxGL = (opts, map) => {
+  return mapboxGL(opts).addTo(map)
+}
+
 export default {
   createMap,
   createTileLayer,
@@ -194,4 +205,6 @@ export default {
   addEsirFeatureLayer,
   addEsirClusterLayer,
   addEsriHeatmap,
+  addProtobuf,
+  addMapboxGL
 }
